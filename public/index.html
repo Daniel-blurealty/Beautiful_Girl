@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Beautiful Girl • Tienda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="./css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#/">
+        <span class="brand-badge">BG</span> Beautiful Girl
+      </a>
+
+      <div class="search">
+        <input type="search" id="searchInput" placeholder="Buscar productos…" />
+        <button id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
+      </div>
+
+      <div class="actions">
+        <div class="login">
+          <button class="linkbtn" id="loginOpen"><i class="fas fa-user"></i> Iniciar sesión</button>
+          <button class="linkbtn hidden" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Salir</button>
+          <span id="userBadge" class="chip hidden">
+            <i class="fas fa-user-circle"></i> <span id="userName"></span>
+          </span>
+
+        </div>
+
+        <button class="iconbtn" id="cartOpen" title="Carrito">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cartCount" class="badge">0</span>
+        </button>
+
+        <a href="/admin.html" class="btn-admin hidden" id="adminLink" data-admin-link="true">
+          <i class="fas fa-cog"></i> Panel Admin
+        </a>
+      </div>
+    </div>
+
+    <div class="catbar">
+      <div class="container cats" id="catBar"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section hidden" id="filterBar">
+      <div class="row">
+        <div class="toggle">
+          <input type="checkbox" id="filterCO" />
+          <label for="filterCO">Mostrar solo marcas colombianas</label>
+        </div>
+        <span class="muted">* provisional: filtra por texto "Colombia"</span>
+      </div>
+    </div>
+
+    <section class="section" id="homeSection">
+      <div class="title">
+        <h2>Lo más vendidos por categoría</h2>
+        <span class="muted">Explora nuestras categorías favoritas</span>
+      </div>
+      <div class="grid" id="homeGrid"></div>
+    </section>
+
+    <section class="section hidden" id="categorySection">
+      <div class="title">
+        <h2 id="catTitle">Categoría</h2>
+        <div><button class="ghost btn" id="backHome"><i class="fas fa-arrow-left"></i> Volver al inicio</button></div>
+      </div>
+      <div class="grid" id="catGrid"></div>
+    </section>
+
+    <section class="section hidden" id="searchSection">
+      <div class="title">
+        <h2>Resultados de búsqueda</h2>
+        <span class="muted" id="searchMeta"></span>
+      </div>
+      <div class="grid" id="searchGrid"></div>
+    </section>
+    <section class="section hidden" id="favoritesSection">
+      <div class="title">
+        <h2>Mis favoritos</h2>
+        <div><button class="ghost btn" id="favBack"><i class="fas fa-arrow-left"></i> Ver todos</button></div>
+      </div>
+      <span class="muted" id="favMeta"></span>
+      <div class="grid" id="favGrid"></div>
+    </section>
+
+    <section class="section hidden" id="productSection">
+      <div class="title">
+        <h2 id="productTitle">Producto</h2>
+        <div><button class="ghost btn" id="productBack"><i class="fas fa-arrow-left"></i> Volver</button></div>
+      </div>
+      <div id="productView" class="product-view"></div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="cartDrawer">
+    <header class="container nav">
+      <strong><i class="fas fa-shopping-cart"></i> Tu carrito</strong>
+      <button class="ghost btn" id="cartClose"><i class="fas fa-times"></i> Cerrar</button>
+    </header>
+    <div class="list" id="cartList"></div>
+    <div class="footer">
+      <div class="row"><span class="muted">Subtotal</span><strong id="cartSubtotal">$0</strong></div>
+      <button class="btn w100" id="checkoutBtn"><i class="fas fa-credit-card"></i> Pagar ahora</button>
+    </div>
+  </aside>
+
+  <dialog id="receiptDlg">
+    <div class="receipt" id="receiptContent"></div>
+    <div class="print">
+      <button class="ghost btn" id="receiptClose">Cerrar</button>
+      <button class="btn" id="receiptPrint"><i class="fas fa-check"></i> Aceptar</button>
+    </div>
+  </dialog>
+
+  <dialog id="loginDlg">
+    <form class="form" id="loginForm" method="dialog">
+      <h3>Iniciar sesión</h3>
+      <input type="email" name="email" placeholder="Correo" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <div class="row">
+        <!-- Cambiar el botón Cancelar a type="button" -->
+        <button type="button" class="ghost btn" id="loginCancel">Cancelar</button>
+        <button type="submit" class="btn" id="loginSubmit"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+      </div>
+      <div class="muted">¿No tienes cuenta? <a href="#" id="openRegister">Regístrate</a></div>
+    </form>
+  </dialog>
+
+  <!-- En el diálogo de registro -->
+  <dialog id="registerDlg">
+    <form class="form" id="registerForm" method="dialog">
+      <h3>Crear cuenta</h3>
+      <input name="name" placeholder="Nombre" required />
+      <input type="email" name="email" placeholder="Correo" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <div class="row">
+        <!-- Cambiar el botón Cancelar a type="button" -->
+        <button type="button" class="ghost btn" id="registerCancel">Cancelar</button>
+        <button type="submit" class="btn" id="registerSubmit"><i class="fas fa-user-plus"></i> Crear</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="float">
+    <a href="https://wa.me/573001234567" target="_blank" class="whatsapp" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://instagram.com/tu_marca" target="_blank" class="ig" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>
